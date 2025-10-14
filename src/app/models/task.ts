@@ -1,4 +1,5 @@
 export interface Task {
+  
   id: number;
   eventId: number;
   title: string;

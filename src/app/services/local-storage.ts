@@ -46,7 +46,6 @@ export class LocalStorageService {
     );
     this.saveData(key, data);
   }
-
   deleteItem(key: string, id: number): void {
     const data = this.getData(key).filter(item => item.id !== id);
     this.saveData(key, data);

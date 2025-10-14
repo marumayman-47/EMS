@@ -99,6 +99,6 @@ export const mockExpenses: Expense[] = [
 ];
 
 export const mockFeedback: Feedback[] = [
-  { id: 501, guestId: 201, eventId: 101, rating: 0, comment: '', createdAt: '' }, // future event
+  { id: 501, guestId: 201, eventId: 101, rating: 0, comment: '', createdAt: '' },
   { id: 502, guestId: 203, eventId: 102, rating: 5, comment: 'Amazing event! Everything was perfect.', createdAt: '2025-06-02' },
 ];

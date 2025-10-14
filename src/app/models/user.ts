@@ -3,5 +3,5 @@ export interface User {
   name: string;
   email: string;
   role: 'Organizer' | 'Guest' | 'Admin';
-  password?: string; // mock login only
+  password?: string;
 }

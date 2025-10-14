@@ -1,4 +1,5 @@
 export interface Expense {
+  
   id: number;
   eventId: number;
   name: string;

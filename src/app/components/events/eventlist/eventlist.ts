@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 })
 export class Eventlist {
   events: any[] = [];
-
   constructor(private storage: LocalStorageService) {}
 
   ngOnInit() {
