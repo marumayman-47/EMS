@@ -5,25 +5,23 @@ import { LocalStorageService } from '../../services/local-storage';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class Login {
-  email = '';
-  password = '';
+export class Register {
+  user = { name: '', email: '', password: '', role: '' };
 
   constructor(private storage: LocalStorageService, private router: Router) {}
 
-  onLogin(): void {
-    const user = this.storage.loginUser(this.email, this.password);
-    
-    if (user) {
-      alert(`Welcome, ${user.name}!`);
-      this.router.navigate((['/dashboard']));
+  onRegister(): void {
+    const success = this.storage.registerUser(this.user);
+    if(success) {
+      alert('Registration successful!');
+      this.router.navigate(['/login']);
     } else {
-      alert('Invalid email or password.');
+      alert('Email already exists. Please use another one.');
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { mockUsers, mockEvents, mockGuests, mockTasks, mockExpenses, mockFeedback } from '../data/mock-data';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,37 @@ export class LocalStorageService {
   deleteItem(key: string, id: number): void {
     const data = this.getData(key).filter(item => item.id !== id);
     this.saveData(key, data);
+  }
+
+  // user auth methods
+  loginUser (email: string, password: string): any | null {
+    const users = this.getData('users');
+    const user = users.find((u: any) => u.email === email && u.password === password);
+    if(user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      return user;
+    }
+    return null;
+  }
+
+  registerUser(newUser: any): boolean {
+    const users = this.getData('users');
+    const exists = users.find((u: any) => u.email === newUser.email);
+    if(exists) {
+      return false; // email already taken.
+    }
+
+    newUser.id = Date.now();
+    users.push(newUser);
+    this.saveData('users', users);
+    return true; 
+  }
+
+  getCurrentUser(): any | null {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  }
+
+  logoutUser(): void {
+    localStorage.removeItem('currentUser');
   }
 }
