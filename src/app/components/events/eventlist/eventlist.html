@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2>Event List</h2>
+  <button (click)="addEvent()" class="btn btn-primary mb-3">Add Demo Event</button>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Location</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of events">
+        <td>{{ e.name }}</td>
+        <td>{{ e.category }}</td>
+        <td>{{ e.location }}</td>
+        <td>{{ e.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
