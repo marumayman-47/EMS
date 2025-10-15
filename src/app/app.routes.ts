@@ -4,11 +4,8 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Home } from './dashboard/home/home';
 import { authGuard } from './services/auth-guard';
-<<<<<<< HEAD
 import { guestRoutes } from './guest/guest-routes';
-=======
 import { EventManage } from './dashboard/events/event-manage/event-manage';
->>>>>>> origin/main
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'  },
@@ -16,10 +13,7 @@ export const routes: Routes = [
     { path: 'register', component: Register }, 
     { path: 'dashboard', component: Home, canActivate: [authGuard] }, 
     { path: 'events', component: Eventlist },
-<<<<<<< HEAD
-    { path: 'guest', children: guestRoutes}
-=======
+    { path: 'guest', children: guestRoutes},
     { path: 'dashboard/events/event-manage', component: EventManage }
 
->>>>>>> origin/main
 ];
