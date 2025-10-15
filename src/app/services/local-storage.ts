@@ -25,30 +25,39 @@ export class LocalStorageService {
       localStorage.setItem(key, JSON.stringify(data));
     }
   }
+// getData<T>() returns an array of type T[].
+//addItem, updateItem, deleteItem only work with objects that have an id (using <T extends { id: number }>).
+//So item is now known, not unknown.
 
-  getData(key: string): any[] {
+  // Generic getData
+  getData<T>(key: string): T[] {
     return JSON.parse(localStorage.getItem(key) || '[]');
   }
 
-  saveData(key: string, data: any[]): void {
+  // Generic saveData
+  saveData<T>(key: string, data: T[]): void {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  addItem(key: string, item: any): void {
-    const data = this.getData(key);
-    item.id = Date.now();
+  // Generic addItem
+  addItem<T extends { id?: number }>(key: string, item: T): void {
+    const data = this.getData<T>(key);
+    item.id = item.id || Date.now();
     data.push(item);
     this.saveData(key, data);
   }
 
-  updateItem(key: string, updatedItem: any): void {
-    const data = this.getData(key).map(item =>
+  // Generic updateItem
+  updateItem<T extends { id: number }>(key: string, updatedItem: T): void {
+    const data = this.getData<T>(key).map((item) =>
       item.id === updatedItem.id ? updatedItem : item
     );
     this.saveData(key, data);
   }
-  deleteItem(key: string, id: number): void {
-    const data = this.getData(key).filter(item => item.id !== id);
+
+  // Generic deleteItem
+  deleteItem<T extends { id: number }>(key: string, id: number): void {
+    const data = this.getData<T>(key).filter((item) => item.id !== id);
     this.saveData(key, data);
   }
 

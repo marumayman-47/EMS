@@ -1,5 +1,5 @@
 import { Expense } from "../models/expense";
-import { Event } from "../models/event";
+import { AppEvent } from "../models/event";
 import { Feedback } from "../models/feedback";
 import { Guest } from "../models/guest";
 import { Task } from "../models/task";
@@ -11,7 +11,7 @@ export const mockUsers: User[] = [
   { id: 3, name: 'Admin User', email: 'admin@evnto.com', role: 'Admin', password: '1234' },
 ];
 
-export const mockEvents: Event[] = [
+export const mockEvents: AppEvent[] = [
   {
     id: 101,
     name: 'Tech Innovation Summit',
