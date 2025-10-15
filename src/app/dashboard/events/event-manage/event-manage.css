@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.4em 0.6em;
+}
+
+.modal-content {
+  border-radius: 12px;
+}
+
+form label {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin: 1rem;
+  }
+}
