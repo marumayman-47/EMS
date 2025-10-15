@@ -7,6 +7,7 @@ import { authGuard } from './services/auth-guard';
 import { guestRoutes } from './guest/guest-routes';
 import { EventManage } from './dashboard/events/event-manage/event-manage';
 import { Tasks } from './dashboard/tasks/tasks';
+import { Feedbacks } from './dashboard/feedbacks/feedbacks';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'  },
@@ -16,11 +17,11 @@ export const routes: Routes = [
     { path: 'events', component: Eventlist },
     { path: 'guest', children: guestRoutes},
     { path: 'dashboard/events/event-manage', component: EventManage },
+    { path: 'feedbacks', component: Feedbacks},
     {
     path: 'dashboard',
     children: [
       { path: 'tasks', component: Tasks },
-      // other dashboard pages (events, team, etc.)
     ]
   }
 
