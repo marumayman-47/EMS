@@ -4,6 +4,7 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Home } from './dashboard/home/home';
 import { authGuard } from './services/auth-guard';
+import { guestRoutes } from './guest/guest-routes';
 import { EventManage } from './dashboard/events/event-manage/event-manage';
 
 export const routes: Routes = [
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: 'register', component: Register }, 
     { path: 'dashboard', component: Home, canActivate: [authGuard] }, 
     { path: 'events', component: Eventlist },
+    { path: 'guest', children: guestRoutes},
     { path: 'dashboard/events/event-manage', component: EventManage }
 
 ];

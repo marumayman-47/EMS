@@ -1,0 +1,79 @@
+/* Default Theme Variables (Light Mode) */
+:root {
+  --bg-color: #ffffff;        /* Main background */
+  --text-color: #212121;      /* Main text color (black) */
+  --card-bg: #f8f9fa;         /* Cards, navbar, footer background */
+  --link-color: #212121;      /* Navbar and link text */
+  --hover-color: #ffc107;     /* Hover color (yellow) */
+  --border-color: #ddd;       /* Border color */
+}
+
+/* Dark Theme Overrides */
+body.dark-theme {
+  --bg-color: #121212;
+  --text-color: #f8f9fa;
+  --card-bg: #1e1e1e;
+  --link-color: #f8f9fa;
+  --hover-color: #ffc107;
+  --border-color: #333;
+}
+
+/* Light Theme Overrides (optional for clarity) */
+body.light-theme {
+  --bg-color: #ffffff;
+  --text-color: #212121;
+  --card-bg: #f8f9fa;
+  --link-color: #212121;
+  --hover-color: #ffc107;
+  --border-color: #ddd;
+}
+
+/* Apply globally */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Links & Navbar */
+a,
+.nav-link {
+  color: var(--link-color) !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+a:hover {
+  color: var(--hover-color) !important;
+}
+
+/* Cards and Containers */
+.card,
+section,
+.container {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Navbar and Footer */
+.navbar,
+.footer {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Form controls */
+.form-control {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.form-control::placeholder {
+  color: var(--text-color);
+  opacity: 0.6;
+}

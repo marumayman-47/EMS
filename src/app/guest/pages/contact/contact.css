@@ -1,0 +1,27 @@
+.contact-section {
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-control {
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  color: var(--input-text);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--hover-color);
+  box-shadow: 0 0 5px var(--hover-color);
+}
+
+.form-control::placeholder {
+  color: rgba(172, 158, 158, 0.8);
+}
+
+.btn-warning:hover {
+  background-color: var(--hover-color);
+  color: #000;
+}

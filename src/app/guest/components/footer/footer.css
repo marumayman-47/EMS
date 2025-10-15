@@ -1,0 +1,37 @@
+footer {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Social icons */
+.social-icon {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+  color: var(--hover-color);
+  transform: scale(1.1);
+}
+
+/* Headings and text */
+footer h2,
+footer h3,
+footer p {
+  color: var(--text-color);
+  text-align: center;
+}
+
+/* Bottom bar */
+footer .bottom-bar {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.875rem;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
