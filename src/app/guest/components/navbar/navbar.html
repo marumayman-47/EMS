@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-lg shadow-sm py-3">
+  <div class="container-fluid px-4">
+
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold text-uppercase me-auto" routerLink="/guest">
+      <i class="bi bi-calendar-event me-2 text-warning"></i> EMS
+    </a>
+
+    <!-- Mobile toggler -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav nav-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/guest/home" routerLinkActive="active-link">
+            <i class="bi bi-house-door me-1"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/guest/events" routerLinkActive="active-link">
+            <i class="bi bi-calendar3 me-1"></i> Events
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/guest/about" routerLinkActive="active-link">
+            <i class="bi bi-info-circle me-1"></i> About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/guest/contact" routerLinkActive="active-link">
+            <i class="bi bi-envelope me-1"></i> Contact
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/guest/profile" routerLinkActive="active-link">
+            <i class="bi bi-person-circle me-1"></i> Profile
+          </a>
+        </li>
+
+        <!-- Theme Toggle -->
+        <button class="btn btn-outline-warning ms-3 theme-toggle" (click)="toggleTheme()">
+          <i [ngClass]="isDarkMode ? 'fas fa-sun' : 'fas fa-moon'"></i>
+        </button>
+
+      </ul>
+    </div>
+  </div>
+</nav>

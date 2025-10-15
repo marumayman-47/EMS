@@ -1,0 +1,17 @@
+.about-section {
+  background: var(--bg-color);
+  min-height: 100vh;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.about-section h2,
+.about-section h4 {
+  color: var(--accent-color);
+}
+
+.about-section p,
+.about-section li {
+  color: var(--text-color);
+  line-height: 1.7;
+}

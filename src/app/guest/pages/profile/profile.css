@@ -1,0 +1,43 @@
+.profile-section {
+  background: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.profile-card {
+  background-color: #1e1e1e;  /* Dark card color, same in light and dark */
+  color: #f8f9fa;             /* Light text on dark card */
+  border: 1px solid #333;
+  transition: transform 0.3s ease;
+}
+
+
+.profile-card:hover {
+  transform: translateY(-5px);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-color);
+}
+
+.form-control {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.form-control::placeholder {
+  color: var(--secondary-text);
+}
+
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 5px var(--accent-color);
+}
