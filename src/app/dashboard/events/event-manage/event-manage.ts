@@ -17,14 +17,85 @@ export class EventManage implements OnInit {
   selectedEvent: AppEvent | null = null;
   dialogMode: 'create' | 'update' | 'view' = 'create';
 
+  searchTerm: string = '';
+  filterCategory: string = '';
+  filterStatus: string = '';
+  filteredEvents: any[] = [];
+  uniqueCategories: string[] = [];
+
+  currentPage: number = 1;
+  itemsPerPage: number = 7;
+  totalPages: number = 1;
+
   constructor(private storage: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadEvents();
+    this.applyFilters();
   }  
   loadEvents(): void {
    this.events = this.storage.getData<AppEvent>('events');
+   this.uniqueCategories = [...new Set(this.events.map((e: any) => e.category))];
+   this.applyFilters();
   }
+  applyFilters(): void {
+  // filter
+  const filtered = this.events.filter((e: any) => {
+    const matchesName = e.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+    const matchesCategory = this.filterCategory ? e.category === this.filterCategory : true;
+    const matchesStatus = this.filterStatus ? e.status === this.filterStatus : true;
+    return matchesName && matchesCategory && matchesStatus;
+  });
+
+  // pagination
+  this.totalPages = Math.ceil(filtered.length / this.itemsPerPage);
+  if (this.currentPage > this.totalPages) this.currentPage = this.totalPages || 1;
+
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  const end = start + this.itemsPerPage;
+  this.filteredEvents = filtered.slice(start, end);
+}
+
+// reset page when filter/search changes
+onFiltersChanged(): void {
+  this.currentPage = 1;
+  this.applyFilters();
+}
+
+// page controls
+goToPage(page: number): void {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+    this.applyFilters();
+  }
+}
+previousPage(): void {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.applyFilters();
+  }
+}
+nextPage(): void {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.applyFilters();
+  }
+}
+
+  // Dark Mode Toggle
+  toggleTheme(event: any) {
+  const isDark = event.target.checked;
+  document.documentElement.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
+ngAfterViewInit() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-bs-theme', savedTheme);
+  const switchEl = document.getElementById('themeSwitch') as HTMLInputElement;
+  if (switchEl) switchEl.checked = savedTheme === 'dark';
+}
+
   openDialog(mode: 'create' | 'update' | 'view', event?: AppEvent): void {
     this.dialogMode = mode;
     this.selectedEvent = event
