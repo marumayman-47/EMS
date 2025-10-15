@@ -1,4 +1,4 @@
-/* 🌎 Default Theme Variables (Light Mode) */
+/* Default Theme Variables (Light Mode) */
 :root {
   --bg-color: #ffffff;        /* Main background */
   --text-color: #212121;      /* Main text color (black) */
@@ -8,7 +8,7 @@
   --border-color: #ddd;       /* Border color */
 }
 
-/* 🌙 Dark Theme Overrides */
+/* Dark Theme Overrides */
 body.dark-theme {
   --bg-color: #121212;
   --text-color: #f8f9fa;
@@ -18,7 +18,7 @@ body.dark-theme {
   --border-color: #333;
 }
 
-/* ☀️ Light Theme Overrides (optional for clarity) */
+/* Light Theme Overrides (optional for clarity) */
 body.light-theme {
   --bg-color: #ffffff;
   --text-color: #212121;
@@ -28,14 +28,14 @@ body.light-theme {
   --border-color: #ddd;
 }
 
-/* 🌐 Apply globally */
+/* Apply globally */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* 🔗 Links & Navbar */
+/* Links & Navbar */
 a,
 .nav-link {
   color: var(--link-color) !important;
@@ -47,7 +47,7 @@ a:hover {
   color: var(--hover-color) !important;
 }
 
-/* 🧱 Cards and Containers */
+/* Cards and Containers */
 .card,
 section,
 .container {
@@ -57,7 +57,7 @@ section,
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* 🔳 Navbar and Footer */
+/* Navbar and Footer */
 .navbar,
 .footer {
   background-color: var(--card-bg) !important;
@@ -66,7 +66,7 @@ section,
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* 🧍 Form controls */
+/* Form controls */
 .form-control {
   background-color: var(--card-bg);
   color: var(--text-color);

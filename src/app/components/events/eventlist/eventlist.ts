@@ -23,6 +23,7 @@ export class Eventlist {
 
   addEvent() {
     const newEvent = {
+      id: 0, // placeholder
       name: 'Demo Event',
       description: 'Sample event for testing',
       category: 'Conference',

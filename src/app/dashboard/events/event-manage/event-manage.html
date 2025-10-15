@@ -1,1 +1,304 @@
-<p>event-manage works!</p>
+<div class="container-fluid py-4 px-3 event-manage">
+    <!-- HEADER -->
+
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div class="d-flex align-items-center gap-3 flex-wrap">
+    <h2 class="fw-bold text-primary m-0">
+      <i class="bi bi-calendar3 me-2"></i> Event Management
+    </h2>
+
+    <!--  Dark Mode Toggle -->
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="themeSwitch"
+          (change)="toggleTheme($event)"
+        />
+        <label class="form-check-label small" for="themeSwitch">Dark Mode</label>
+      </div>
+  </div>
+    
+    <button class="btn btn-primary px-4 fw-semibold shadow-sm" (click)="openDialog('create')">
+      <i class="bi bi-plus-circle me-1"></i> Create New Event
+    </button>
+  </div>
+
+<!-- FILTER BAR -->
+<!-- filter events in your table by:Search term (name)-Category-Status-->
+
+  <div class="card border-0 shadow-sm rounded-4 mb-4 p-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="🔍 Search by name..."
+          [(ngModel)]="searchTerm"
+          (input)="applyFilters()"
+        />
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="filterCategory" (change)="applyFilters()">
+          <option value="">All Categories</option>
+          <option *ngFor="let c of uniqueCategories" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+          <option value="">All Status</option>
+          <option>Upcoming</option>
+          <option>InProgress</option>
+          <option>Completed</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+    <!-- TABLE -->
+   <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-primary text-center text-uppercase small fw-semibold">
+          <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Created By</th>
+          <th>Guests IDs</th>
+          <th>Tasks IDs</th>
+          <th>Expenses IDs</th>
+          <th>Feedback IDs</th>
+          <th>Status</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of filteredEvents">
+          <td class="fw-semibold text-muted">{{ e.id }}</td>
+          <td class="fw-semibold">{{ e.name }}</td>
+          <td>{{ e.description }}</td>
+          <td>{{ e.category }}</td>
+          <td>{{ e.location }}</td>
+          <td>{{ e.startDate }}</td>
+          <td>{{ e.endDate }}</td>
+          <td>{{ e.createdBy }}</td>
+          <td>{{ e.guests.join(', ') }}</td>
+          <td>{{ e.tasks.join(', ') }}</td>
+          <td>{{ e.expenses.join(', ') }}</td>
+          <td>{{ e.feedback.join(', ') }}</td>
+          <td>
+            <span class="badge px-3 py-2 rounded-pill text-white"
+              [ngClass]="{
+                'bg-success': e.status === 'Completed',
+                'bg-warning': e.status === 'Upcoming',
+                'bg-info': e.status === 'InProgress',
+                'bg-danger': e.status === 'Cancelled'
+              }">
+              {{ e.status }}
+            </span>
+          </td>
+          <td class="text-nowrap text-center">
+            <button class="btn btn-sm btn-outline btn-primary me-1" (click)="openDialog('view', e)">
+              <i class="bi bi-eye">View</i>
+            </button>
+            <button class="btn btn-sm btn-outline btn-warning me-1" (click)="openDialog('update', e)">
+              <i class="bi bi-pencil">Update</i>
+            </button>
+            <button class="btn btn-sm btn-outline btn-danger" (click)="deleteEvent(e.id)">
+              <i class="bi bi-trash">Delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+  <!-- PAGINATION -->
+<div
+  class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2 pagination-container"
+  *ngIf="totalPages > 1"
+>
+  <button class="btn btn-outline-primary btn-sm"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+    <i class="bi bi-chevron-left"></i> Previous
+  </button>
+
+  <div class="d-flex align-items-center gap-2 flex-wrap">
+    <ul class="pagination mb-0">
+      <li class="page-item"
+          *ngFor="let p of [].constructor(totalPages); let i = index"
+          [class.active]="i + 1 === currentPage">
+        <button class="page-link" (click)="goToPage(i + 1)">
+          {{ i + 1 }}
+        </button>
+      </li>
+    </ul>
+    <span class="text-muted small">Page {{ currentPage }} of {{ totalPages }}</span>
+  </div>
+
+  <button class="btn btn-outline-primary btn-sm"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+    Next <i class="bi bi-chevron-right"></i>
+  </button>
+</div>
+
+
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content shadow-lg border-0 rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-semibold">
+            {{ dialogMode === 'create' ? 'Create Event' : dialogMode === 'update' ? 'Update Event' : 'View Event' }}
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- VIEW MODE -->
+        <div class="modal-body" *ngIf="dialogMode === 'view' && selectedEvent">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>ID:</strong> {{ selectedEvent.id }}</li>
+            <li class="list-group-item"><strong>Name:</strong> {{ selectedEvent.name }}</li>
+            <li class="list-group-item"><strong>Description:</strong> {{ selectedEvent.description }}</li>
+            <li class="list-group-item"><strong>Category:</strong> {{ selectedEvent.category }}</li>
+            <li class="list-group-item"><strong>Location:</strong> {{ selectedEvent.location }}</li>
+            <li class="list-group-item"><strong>Start:</strong> {{ selectedEvent.startDate }}</li>
+            <li class="list-group-item"><strong>End:</strong> {{ selectedEvent.endDate }}</li>
+            <li class="list-group-item"><strong>Created By:</strong> {{ selectedEvent.createdBy }}</li>
+            <li class="list-group-item"><strong>Guests:</strong> {{ selectedEvent.guests.join(', ') }}</li>
+            <li class="list-group-item"><strong>Tasks:</strong> {{ selectedEvent.tasks.join(', ') }}</li>
+            <li class="list-group-item"><strong>Expenses:</strong> {{ selectedEvent.expenses.join(', ') }}</li>
+            <li class="list-group-item"><strong>Feedback:</strong> {{ selectedEvent.feedback.join(', ') }}</li>
+            <li class="list-group-item"><strong>Status:</strong> {{ selectedEvent.status }}</li>
+          </ul>
+        </div>
+
+        <!-- CREATE / UPDATE MODE -->
+        <div class="modal-body" *ngIf="selectedEvent">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Name</label>
+                <input
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.name"
+                  name="name"
+                  [readonly]="dialogMode === 'view'"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Category</label>
+                <input
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.category"
+                  name="category"
+                  [readonly]="dialogMode === 'view'"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.description"
+                  name="description"
+                  [readonly]="dialogMode === 'view'"
+                ></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Location</label>
+                <input
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.location"
+                  name="location"
+                  [readonly]="dialogMode === 'view'"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Start Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.startDate"
+                  name="startDate"
+                  [readonly]="dialogMode === 'view'"
+                />
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">End Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="selectedEvent.endDate"
+                  name="endDate"
+                  [readonly]="dialogMode === 'view'"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Created By (User ID)</label>
+                <input type="number" class="form-control" [(ngModel)]="selectedEvent.createdBy" name="createdBy" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Guests (IDs comma-separated)</label>
+                <input class="form-control" [(ngModel)]="selectedEvent.guests" name="guests" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Tasks (IDs comma-separated)</label>
+                <input class="form-control" [(ngModel)]="selectedEvent.tasks" name="tasks" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Expenses (IDs comma-separated)</label>
+                <input class="form-control" [(ngModel)]="selectedEvent.expenses" name="expenses" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Feedback (IDs comma-separated)</label>
+                <input class="form-control" [(ngModel)]="selectedEvent.feedback" name="feedback" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Status</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="selectedEvent.status"
+                  name="status"
+                  [disabled]="dialogMode === 'view'"
+                >
+                  <option>Upcoming</option>
+                  <option>InProgress</option>
+                  <option>Completed</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button
+            *ngIf="dialogMode !== 'view'"
+            type="button"
+            class="btn btn-primary"
+            (click)="saveEvent()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
