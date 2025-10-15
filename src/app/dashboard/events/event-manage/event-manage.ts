@@ -27,7 +27,24 @@ export class EventManage implements OnInit {
   }
   openDialog(mode: 'create' | 'update' | 'view', event?: AppEvent): void {
     this.dialogMode = mode;
-    this.selectedEvent = event ? { ...event } : this.getEmptyEvent();
+    this.selectedEvent = event
+      ? { ...event }
+      : {
+          id: 0,
+          name: '',
+          description: '',
+          category: '',
+          location: '',
+          startDate: '',
+          endDate: '',
+          createdBy: 1,
+          guests: [],
+          tasks: [],
+          expenses: [],
+          feedback: [],
+          status: 'Upcoming'
+        };
+
     const modal = document.getElementById('eventModal') as any;
     const bsModal = new bootstrap.Modal(modal);
     bsModal.show();
@@ -39,31 +56,37 @@ export class EventManage implements OnInit {
     modal?.hide();
   }
 
-  getEmptyEvent(): AppEvent {
-    return {
-      id: 0,
-      name: '',
-      description: '',
-      category: '',
-      location: '',
-      startDate: '',
-      endDate: '',
-      createdBy: 1,
-      guests: [],
-      tasks: [],
-      expenses: [],
-      feedback: [],
-      status: 'Upcoming'
-    };
-  }
+  // getEmptyEvent(): AppEvent {
+  //   return {
+  //     id: 0,
+  //     name: '',
+  //     description: '',
+  //     category: '',
+  //     location: '',
+  //     startDate: '',
+  //     endDate: '',
+  //     createdBy: 1,
+  //     guests: [],
+  //     tasks: [],
+  //     expenses: [],
+  //     feedback: [],
+  //     status: 'Upcoming'
+  //   };
+  // }
 
   saveEvent(): void {
     if (!this.selectedEvent) return;
 
+    // Convert comma-separated text fields back to arrays
+    this.selectedEvent.guests = this.toNumberArray(this.selectedEvent.guests);
+    this.selectedEvent.tasks = this.toNumberArray(this.selectedEvent.tasks);
+    this.selectedEvent.expenses = this.toNumberArray(this.selectedEvent.expenses);
+    this.selectedEvent.feedback = this.toNumberArray(this.selectedEvent.feedback);
+
     if (this.dialogMode === 'create') {
-      this.storage.addItem('events', this.selectedEvent);
+      this.storage.addItem<AppEvent>('events', this.selectedEvent);
     } else if (this.dialogMode === 'update') {
-      this.storage.updateItem('events', this.selectedEvent);
+      this.storage.updateItem<AppEvent>('events', this.selectedEvent);
     }
 
     this.loadEvents();
@@ -72,8 +95,15 @@ export class EventManage implements OnInit {
 
   deleteEvent(id: number): void {
     if (confirm('Are you sure you want to delete this event?')) {
-      this.storage.deleteItem('events', id);
+      this.storage.deleteItem<AppEvent>('events', id);
       this.loadEvents();
     }
+  }
+
+  private toNumberArray(value: any): number[] {
+    if (Array.isArray(value)) return value.map(Number);
+    if (typeof value === 'string' && value.trim() !== '')
+      return value.split(',').map(v => Number(v.trim()));
+    return [];
   }
 }
