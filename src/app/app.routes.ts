@@ -9,6 +9,7 @@ import { EventManage } from './dashboard/events/event-manage/event-manage';
 import { Tasks } from './dashboard/tasks/tasks';
 import { Feedbacks } from './dashboard/feedbacks/feedbacks';
 import { Expenses } from './dashboard/expenses/expenses';
+import { Reports } from './dashboard/reports/reports';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'  },
@@ -20,6 +21,8 @@ export const routes: Routes = [
     { path: 'dashboard/events/event-manage', component: EventManage },
     { path: 'feedbacks', component: Feedbacks},
     { path: 'expenses', component: Expenses },
+    { path: 'reports', component: Reports },
+
     {
     path: 'dashboard',
     children: [
