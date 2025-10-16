@@ -31,7 +31,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: Home },
             { path: 'events', component: EventView },
-            { path: 'dashboard/events/event-manage', component: EventManage },
+            { path: 'events/manage', component: EventManage },
             { path: 'guests', component: Guests },
             { path: 'tasks', component: Tasks },
             { path: 'expenses', component: Expenses },
