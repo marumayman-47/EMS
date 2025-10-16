@@ -1,17 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-4">
-    <span class="navbar-brand fw-bold">Event Planner</span>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/dashboard/home">Event Planner</a>
 
-    <!-- <button 
-      class="btn btn-theme ms-auto d-flex align-items-center gap-2" 
-      (click)="toggleTheme()"
-    >
-      <i class="bi" [ngClass]="isDark ? 'bi-sun' : 'bi-moon'"></i>
-      <span>{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
-    </button> -->
+    <div class="d-flex align-items-center ms-auto gap-3">
+      <!-- user info (small) -->
+      <div class="d-flex flex-column text-end me-3 d-none d-md-block">
+        <small class="fw-semibold">{{ userName }}</small>
+        <small class="text-muted">({{ userRole }})</small>
+      </div>
 
-    
-    <div class="ms-auto">
-      <button class="btn btn-outline-danger btn-sm" (click)="logout()">Logout</button>
+      <!-- placeholder for future items -->
+      <div class="d-flex align-items-center gap-2">
+        <!-- notifications / theme toggle could go here later -->
+      </div>
+
+      <!-- logout -->
+      <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+        Logout
+      </button>
     </div>
-  </nav>
-  
+  </div>
+</nav>

@@ -1,30 +1,34 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-navbar-dashboard',
   standalone: true, 
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar-dashboard.html',
-  styleUrl: './navbar-dashboard.css'
+  styleUrls: ['./navbar-dashboard.css']
 })
 export class NavbarDashboard {
-  isDark = false;
+  userName = '';
+  userRole = '';
 
-  constructor(private router: Router, private storage: LocalStorageService, private themeService: ThemeService) {
-    this.isDark = document.body.classList.contains('dark-theme');
+  constructor(private router: Router, private storage: LocalStorageService) {}
+
+  ngOnInit(): void {
+    const user = this.storage.getCurrentUser();
+    if(user) {
+      this.userName = user.name || '';
+      this.userRole = user.role || '';
+    }
   }
-
+  
   logout() {
     this.storage.logoutUser();
     this.router.navigate(['/login']);
   }
 
-  toggleTheme() {
-    this.themeService.toggleTheme();
-    this.isDark = document.body.classList.contains('dark-theme');
-  }
+  
 }
