@@ -1,1 +1,153 @@
-<p>guests works!</p>
+<div class="container-fluid px-4 py-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold">Guests Management</h3>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#guestModal">
+        + Add Guest
+      </button>
+    </div>
+  
+    <!-- Filters -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <select class="form-select" [(ngModel)]="selectedEvent" (change)="filterGuests()">
+          <option value="">All Events</option>
+          <option *ngFor="let event of events" [value]="event.id">{{ event.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select" [(ngModel)]="selectedStatus" (change)="filterGuests()">
+          <option value="">All Statuses</option>
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name or email"
+          [(ngModel)]="searchTerm"
+          (input)="filterGuests()"
+        />
+      </div>
+    </div>
+  
+    <!-- Guests Table -->
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Event</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let guest of filteredGuests">
+            <td>{{ guest.name }}</td>
+            <td>{{ guest.email }}</td>
+            <td>{{ guest.phone }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'bg-warning': guest.status === 'Pending',
+                  'bg-info': guest.status === 'Invited',
+                  'bg-success': guest.status === 'Accepted',
+                  'bg-danger': guest.status === 'Declined'
+                }"
+              >
+                {{ guest.status }}
+              </span>
+            </td>
+            <td>{{ getEventName(guest.eventId) }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-secondary me-1" (click)="editGuest(guest)">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteGuest(guest.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="guestModal"
+      tabindex="-1"
+      aria-labelledby="guestModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form (ngSubmit)="saveGuest()">
+            <div class="modal-header">
+              <h5 class="modal-title" id="guestModalLabel">
+                {{ editMode ? 'Edit Guest' : 'Add Guest' }}
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="guestForm.name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="guestForm.email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="guestForm.phone"
+                  name="phone"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Event</label>
+                <select class="form-select" [(ngModel)]="guestForm.eventId" name="eventId" required>
+                  <option *ngFor="let event of events" [value]="event.id">{{ event.name }}</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" [(ngModel)]="guestForm.status" name="status">
+                  <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">{{ editMode ? 'Update' : 'Save' }}</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
