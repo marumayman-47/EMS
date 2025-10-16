@@ -10,8 +10,8 @@
       <div
         class="col-6 col-md-4 col-lg-2"
         *ngFor="let item of [
-          { title: 'Total Events', value: stats.totalEvents, icon: 'bi-calendar-event', color: 'primary', path: '/dashboard/events' },
-          { title: 'Upcoming Events', value: stats.upcomingEvents, icon: 'bi-calendar-check', color: 'info', path: '/dashboard/events' },
+          { title: 'Total Events', value: stats.totalEvents, icon: 'bi-calendar-event', color: 'primary', path: '/dashboard/events/manage' },
+          { title: 'Upcoming Events', value: stats.upcomingEvents, icon: 'bi-calendar-check', color: 'info', path: '/dashboard/events/manage' },
           { title: 'Guests', value: stats.totalGuests, icon: 'bi-people', color: 'success', path: '/dashboard/guests' },
           { title: 'Tasks', value: stats.totalTasks, icon: 'bi-check2-square', color: 'warning', path: '/dashboard/tasks' },
           { title: 'Expenses', value: stats.totalExpenses + ' EGP', icon: 'bi-cash-stack', color: 'danger', path: '/dashboard/expenses' },
