@@ -1,0 +1,19 @@
+/* simple styling for the navbar */
+:host { display: block !important; }
+
+.navbar {
+  height: 64px !important;
+}
+
+.navbar-brand {
+  cursor: pointer !important;
+}
+
+.navbar .btn {
+  border-radius: 0.35rem !important;
+}
+
+/* make user text a bit smaller and dim on small screens */
+@media (max-width: 767px) {
+  .navbar .d-md-block { display: none !important; }
+}
