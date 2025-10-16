@@ -39,6 +39,7 @@ export class Guests implements OnInit {
   ngOnInit(): void {
     this.loadEvents();
     this.loadGuests();
+
   }
 
   // Load guests from localStorage
@@ -71,7 +72,7 @@ export class Guests implements OnInit {
   }
 
   getEventName(id: number): string {
-    const ev = this.events.find(e => e.id === id);
+    const ev = this.events.find(e => Number(e.id) === Number(id));
     return ev ? ev.name : 'Unknown Event';
   }
 
@@ -136,4 +137,6 @@ export class Guests implements OnInit {
     };
     this.editMode = false;
   }
+
+  
 }
