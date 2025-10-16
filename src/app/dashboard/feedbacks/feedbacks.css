@@ -1,0 +1,24 @@
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-info {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: #0b5ed7;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+}
