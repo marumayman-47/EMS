@@ -31,10 +31,12 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: Home },
             { path: 'events', component: EventView },
+            { path: 'dashboard/events/event-manage', component: EventManage },
             { path: 'guests', component: Guests },
             { path: 'tasks', component: Tasks },
             { path: 'expenses', component: Expenses },
             { path: 'feedback', component: Feedbacks },
+            { path: 'reports', component: Reports },
             { path: 'settings', component: Settings },
         ]
      }, 
@@ -42,11 +44,8 @@ export const routes: Routes = [
     
     { path: 'events', component: Eventlist },
     { path: 'guest', children: guestRoutes},
-    { path: 'dashboard/events/event-manage', component: EventManage },
-
-    { path: 'feedbacks', component: Feedbacks},
-    { path: 'expenses', component: Expenses },
-    { path: 'reports', component: Reports },
+    
+    
 
 
     // =================================================================

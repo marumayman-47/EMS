@@ -1,0 +1,27 @@
+.home-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  /* Card responsiveness & interaction */
+  .stat-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Improve readability on small screens */
+  @media (max-width: 767px) {
+    .stat-card h4 {
+      font-size: 1.2rem;
+    }
+    .stat-card h6 {
+      font-size: 0.9rem;
+    }
+  }
+  
