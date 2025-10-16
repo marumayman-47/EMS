@@ -1,0 +1,10 @@
+.nav-link {
+    color: white !important;
+  }
+  
+  .nav-link:hover {
+    color: #adb5bd !important; /* Optional: light gray hover */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.375rem;
+  }
+  

@@ -21,7 +21,7 @@ export class Login {
     
     if (user) {
       alert(`Welcome, ${user.name}!`);
-      this.router.navigate((['/dashboard/events/event-manage']));
+      this.router.navigate((['/dashboard']));
     } else {
       alert('Invalid email or password.');
     }

@@ -1,0 +1,15 @@
+/* Simple full-screen layout styling */
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.d-flex {
+  height: 100%;
+}
+
+.flex-grow-1 {
+  background-color: #f8f9fa;
+  overflow-y: auto;
+}
