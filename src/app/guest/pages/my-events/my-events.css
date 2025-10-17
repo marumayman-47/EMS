@@ -1,120 +1,69 @@
 .my-events-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem;
+  background-color: var(--bg-color);
   color: var(--text-color);
-  transition: color 0.3s ease, background-color 0.3s ease;
+  min-height: 80vh;
 }
 
-.my-events-container h2 {
+.page-title {
   text-align: center;
-  font-weight: 700;
   margin-bottom: 2rem;
+  font-size: 1.8rem;
   color: var(--text-color);
+}
+
+.no-events {
+  text-align: center;
+  padding: 4rem 1rem;
+  opacity: 0.8;
+}
+
+.no-events .icon {
+  font-size: 3rem;
+  color: var(--hover-color);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
 .event-card {
   background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
 }
 
 .event-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
 
-.event-card h3 {
-  color: var(--text-color);
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+.feedback-section {
+  margin-top: 1rem;
 }
 
-.event-card p {
-  color: var(--text-color);
-  opacity: 0.85;
-  margin-bottom: 1rem;
-}
-
-.event-card textarea {
+.feedback-section textarea {
   width: 100%;
-  min-height: 90px;
-  padding: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-size: 0.95rem;
-  resize: vertical;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.event-card textarea:focus {
-  border-color: var(--hover-color);
-  box-shadow: 0 0 4px var(--hover-color);
-  outline: none;
-}
-
-.event-card input[type="number"] {
-  width: 100px;
+  min-height: 80px;
   padding: 0.5rem;
-  border-radius: 8px;
+  margin-top: 0.5rem;
+  border-radius: 6px;
   border: 1px solid var(--border-color);
   background-color: var(--bg-color);
   color: var(--text-color);
-  margin: 0.5rem 0 1rem;
-  transition: border-color 0.3s ease;
 }
 
-.event-card input:focus {
-  border-color: var(--hover-color);
-  outline: none;
+.feedback-section select {
+  margin-bottom: 0.5rem;
+  padding: 0.3rem;
 }
 
-.event-card button {
-  background-color: var(--hover-color);
-  color: #212121;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.event-card button:hover {
-  background-color: #ffb300;
-  transform: translateY(-2px);
-}
-
-.text-muted {
-  color: var(--text-color);
-  opacity: 0.6;
-  font-style: italic;
-}
-
-.empty-message {
-  text-align: center;
-  font-size: 1.1rem;
-  color: var(--text-color);
-  opacity: 0.7;
-  margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-  .event-card {
-    padding: 1rem;
-  }
-
-  .event-card h3 {
-    font-size: 1.25rem;
-  }
-
-  .event-card textarea {
-    font-size: 0.9rem;
-  }
+.btn-primary {
+  margin-top: 0.8rem;
+  display: inline-block;
 }

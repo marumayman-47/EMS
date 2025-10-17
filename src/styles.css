@@ -82,7 +82,7 @@ section,
 /* ================================================================================= */
 
 /* 🌞 Light Theme (default) */
-:root {
+/* :root {
   --bg-color: #f8f9fa;
   --text-color: #212529;
   --card-bg: #ffffff;
@@ -91,10 +91,10 @@ section,
   --link-color: #0d6efd;
   --btn-bg: #0d6efd;
   --btn-color: #fff;
-}
+} */
 
 /* 🌙 Dark Theme */
-body.dark-theme {
+/* body.dark-theme {
   --bg-color: #121212;
   --text-color: #f8f9fa;
   --card-bg: #1e1e1e;
@@ -107,36 +107,36 @@ body.dark-theme {
 body.dark-theme, body.dark-theme * {
   background-color: var(--bg-color) !important;
   color: var(--text-color) !important;
-}
+} */
 
 
 /* Global application */
-html, body {
+/* html, body {
   height: 100%;
   background-color: var(--bg-color) !important;
   color: var(--text-color) !important;
   transition: background-color 0.4s ease, color 0.4s ease;
-}
+} */
 
 /* Navbar and sidebar */
-.navbar, .sidebar {
+/* .navbar, .sidebar {
   background-color: var(--nav-bg) !important;
   color: var(--text-color) !important;
-}
+} */
 
 /* Card */
-.card {
+/* .card {
   background-color: var(--card-bg) !important;
   color: var(--text-color) !important;
-}
+} */
 
 /* Links */
-a, .nav-link {
+/* a, .nav-link {
   color: var(--link-color) !important;
-}
+} */
 
 /* Buttons */
-.btn-theme {
+/* .btn-theme {
   background-color: var(--btn-bg) !important;
   color: var(--btn-color) !important;
   border: 1px solid var(--btn-color);
@@ -144,4 +144,4 @@ a, .nav-link {
 
 .btn-theme:hover {
   opacity: 0.85;
-}
+} */
