@@ -1,0 +1,19 @@
+<div class="my-events-container">
+  <h2>My Attended Events</h2>
+
+  <div *ngFor="let event of attendedEvents" class="event-card">
+    <h3>{{ event.name }}</h3>
+    <p>{{ event.description }}</p>
+
+    <!-- Only show form if event is completed -->
+    <div *ngIf="event.status === 'Completed'; else noFeedback">
+      <textarea [(ngModel)]="feedbackText[event.id]" placeholder="Write your feedback..."></textarea>
+      <input type="number" [(ngModel)]="feedbackRating[event.id]" min="1" max="5" placeholder="Rating (1-5)" />
+      <button (click)="submitFeedback(event.id)">Submit Feedback</button>
+    </div>
+
+    <ng-template #noFeedback>
+      <p>Feedback available after the event is completed.</p>
+    </ng-template>
+  </div>
+</div>

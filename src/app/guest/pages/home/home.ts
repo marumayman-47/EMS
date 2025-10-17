@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +6,16 @@ import { Component } from '@angular/core';
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
-export class Home {
+export class Home implements OnInit{
+  events: any[] = [];
+
+  ngOnInit(): void {
+    const storedEvents = localStorage.getItem('events');
+    if (storedEvents) {
+      this.events = JSON.parse(storedEvents);
+    } else {
+      alert("No Events founded.")
+    }
+  }  
 
 }
