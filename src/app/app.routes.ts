@@ -6,14 +6,48 @@ import { Home } from './dashboard/home/home';
 import { authGuard } from './services/auth-guard';
 import { guestRoutes } from './guest/guest-routes';
 import { EventManage } from './dashboard/events/event-manage/event-manage';
+import { Layout } from './dashboard/layout/layout';
+
+import { EventView } from './dashboard/events/event-view/event-view';
+import { Guests } from './dashboard/guests/guests';
+import { Tasks } from './dashboard/tasks/tasks';
+import { Expenses } from './dashboard/expenses/expenses';
+import { Feedbacks } from './dashboard/feedbacks/feedbacks';
+import { Settings } from './dashboard/settings/settings';
+
+import { Reports } from './dashboard/reports/reports';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'  },
     { path: 'login', component: Login }, 
     { path: 'register', component: Register }, 
-    { path: 'dashboard', component: Home, canActivate: [authGuard] }, 
+    // ============ start organizer dashboard routes ==================
+    { 
+        path: 'dashboard', 
+        component: Layout, 
+        canActivate: [authGuard], 
+        children: [
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', component: Home },
+            { path: 'events', component: EventView },
+            { path: 'events/manage', component: EventManage },
+            { path: 'guests', component: Guests },
+            { path: 'tasks', component: Tasks },
+            { path: 'expenses', component: Expenses },
+            { path: 'feedback', component: Feedbacks },
+            { path: 'reports', component: Reports },
+            { path: 'settings', component: Settings },
+        ]
+     }, 
+    // ============ end organizer dashboard routes ====================
+    
     { path: 'events', component: Eventlist },
     { path: 'guest', children: guestRoutes},
-    { path: 'dashboard/events/event-manage', component: EventManage }
+    
+    
 
+
+    // ================== fallback =====================
+    { path: '**', redirectTo: 'login' }
 ];

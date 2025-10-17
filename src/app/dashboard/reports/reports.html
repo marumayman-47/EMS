@@ -1,1 +1,42 @@
-<p>reports works!</p>
+<div #reportSection class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">📊 Reports Dashboard</h3>
+    <button class="btn btn-danger" (click)="exportPDF()">Export to PDF</button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row text-center g-3">
+    <div class="col-6 col-md-2" *ngFor="let stat of [
+      {label:'Total Events', value: totalEvents},
+      {label:'Upcoming', value: upcomingEvents},
+      {label:'Completed', value: completedEvents},
+      {label:'Guests', value: totalGuests},
+      {label:'Expenses ($)', value: totalExpenses},
+      {label:'Avg Rating', value: avgFeedback}
+    ]">
+      <div class="card shadow-sm p-3 rounded-4">
+        <h6>{{ stat.label }}</h6>
+        <h4 class="fw-bold text-primary">{{ stat.value }}</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="row mt-5 g-4">
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm chart-container">
+        <canvas #pieCanvas></canvas>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm chart-container">
+        <canvas #barCanvas></canvas>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm chart-container">
+        <canvas #lineCanvas></canvas>
+      </div>
+    </div>
+  </div>
+</div>
