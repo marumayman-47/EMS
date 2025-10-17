@@ -8,6 +8,7 @@ import { About } from './pages/about/about';
 import { Contact } from './pages/contact/contact';
 import { Navbar } from './components/navbar/navbar';
 import { GuestLayout } from './layout/guest-layout/guest-layout';
+import { MyEvents } from './pages/my-events/my-events';
 
 export const guestRoutes: Routes = [
     {
@@ -22,6 +23,7 @@ export const guestRoutes: Routes = [
       { path: 'profile', component: Profile },
       { path: 'about', component: About },
       { path: 'contact', component: Contact },
+      { path: 'my-events', component: MyEvents }
     ]
   }
 ];

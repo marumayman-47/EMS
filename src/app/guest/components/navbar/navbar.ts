@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 })
 export class Navbar implements OnInit{
   isDarkMode = true;
+  currentUser = localStorage.getItem('currentUser');
 
   ngOnInit(): void {
     const savedTheme = localStorage.getItem('theme');

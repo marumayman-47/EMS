@@ -1,1 +1,45 @@
-<p>event-details works!</p>
+<section class="event-details py-5">
+  <div class="container" *ngIf="event">
+    <h2 class="fw-bold">{{ event.name }}</h2>
+    <p class="text-muted">{{ event.description }}</p>
+
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Category:</strong> {{ event.category }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Start Date:</strong> {{ event.startDate }}</p>
+        <p><strong>End Date:</strong> {{ event.endDate }}</p>
+        <p><strong>Status:</strong> {{ event.status }}</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- <h4>Guests</h4>
+    <ul>
+      <li *ngFor="let g of guests">{{ g.name }} - {{ g.status }}</li>
+    </ul>
+
+    <h4>Tasks</h4>
+    <ul>
+      <li *ngFor="let t of tasks">{{ t.title }} ({{ t.status }})</li>
+    </ul>
+
+    <h4>Expenses</h4>
+    <ul>
+      <li *ngFor="let ex of expenses">{{ ex.name }} - {{ ex.amount }} EGP</li>
+    </ul> -->
+
+    <h4>Feedback</h4>
+    <ul>
+      <li *ngFor="let f of feedback">{{ f.comment || 'No feedback yet' }}</li>
+    </ul>
+
+    <button 
+    class="btn btn-warning bg-warning text-dark"
+    (click)="bookEvent()"
+    [disabled]="event.status !== 'Upcoming'">
+    Attend This Event
+  </button>
+  </div>
+</section>
