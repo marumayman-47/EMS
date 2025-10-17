@@ -15,51 +15,64 @@ import { FormsModule } from '@angular/forms';
 export class MyEvents {
   attendedEvents: AppEvent[] = [];
   feedbackText: { [eventId: number]: string } = {};
-  feedbackRating: { [eventId: number]: number } = {};
 
   constructor(private localStorage: LocalStorageService) {}
 
   ngOnInit(): void {
     const currentUser = this.localStorage.getCurrentUser();
-    const allGuests = this.localStorage.getData<Guest>('guests');
-    const allEvents = this.localStorage.getData<AppEvent>('events');
+    const allGuests = this.localStorage.getData<Guest>('guests') || [];
+    const allEvents = this.localStorage.getData<AppEvent>('events') || [];
+    const allFeedback = this.localStorage.getData<Feedback>('feedback') || [];
 
-    // find all events this user attended
+    // Find all events the user attended
     const myGuestEntries = allGuests.filter(
       g => g.email === currentUser?.email && g.status === 'Accepted'
     );
     const eventIds = myGuestEntries.map(g => g.eventId);
-
     this.attendedEvents = allEvents.filter(e => eventIds.includes(e.id));
+
+    // Pre-fill feedbacks if they exist
+    allFeedback
+      .filter(f => f.guestId === currentUser.id)
+      .forEach(f => (this.feedbackText[f.eventId] = f.comment));
   }
 
   submitFeedback(eventId: number): void {
     const comment = this.feedbackText[eventId];
-    const rating = this.feedbackRating[eventId];
     const currentUser = this.localStorage.getCurrentUser();
 
-    if (!comment || !rating) {
-      alert('Please enter both comment and rating.');
+    if (!comment || comment.trim() === '') {
+      alert('Please enter your feedback comment.');
       return;
     }
 
-    const newFeedback: Feedback = {
-      id: Date.now(),
-      eventId: eventId,
-      guestId: currentUser.id,
-      comment: comment,
-      rating: rating,
-      createdAt: new Date().toISOString()
-    };
+    let feedbacks = this.localStorage.getData<Feedback>('feedback') || [];
 
-    // Save to localStorage
-    this.localStorage.addItem('feedback', newFeedback);
+    // Check if user already gave feedback for this event
+    const existingFeedbackIndex = feedbacks.findIndex(
+      f => f.eventId === eventId && f.guestId === currentUser.id
+    );
 
-    // Reset form
-    this.feedbackText[eventId] = '';
-    this.feedbackRating[eventId] = 0;
+    if (existingFeedbackIndex !== -1) {
+      // Update existing feedback
+      feedbacks[existingFeedbackIndex].comment = comment;
+      feedbacks[existingFeedbackIndex].createdAt = new Date().toISOString();
+      alert('Feedback updated successfully!');
+    } else {
+      // Add new feedback
+      const newFeedback: Feedback = {
+        id: Date.now(),
+        eventId,
+        guestId: currentUser.id,
+        comment,
+        rating: 0, // not used, but to keeps model consistent
+        createdAt: new Date().toISOString()
+      };
+      feedbacks.push(newFeedback);
+      alert('Feedback submitted successfully!');
+    }
 
-    alert('Feedback submitted successfully!');
+    // Save back to local storage
+    this.localStorage.saveData('feedback', feedbacks);
   }
-
 }
