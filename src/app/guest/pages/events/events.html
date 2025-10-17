@@ -1,1 +1,30 @@
-<p>events works!</p>
+<div class="events-container">
+    <h2 class="text-center mb-4 fw-bold">Explore Events</h2>
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      placeholder="Search events by name, category, or location..."
+    />
+  </div>
+
+  <div class="event-grid">
+    <div *ngFor="let event of visibleEvents" class="event-card">
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.description }}</p>
+      <p><strong>Category:</strong> {{ event.category }}</p>
+      <p><strong>Location:</strong> {{ event.location }}</p>
+      <p><strong>Date:</strong> {{ event.startDate }}
+         <strong>End:</strong> {{ event.endDate }}</p>
+       <p><span class="badge bg-warning text-dark">{{ event.status }}</span></p>
+       <button class="btn btn-dark w-100 mt-2" (click)="viewDetails(event.id)">
+            View Details
+        </button>
+    </div>
+  </div>
+
+  <div class="view-more" *ngIf="visibleEvents.length < filteredEvents.length">
+    <button class="badge bg-warning text-dark" (click)="viewMore()">View More</button>
+  </div>
+</div>
