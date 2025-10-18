@@ -9,6 +9,7 @@ export const mockUsers: User[] = [
   { id: 1, name: 'Amira Mohamed', email: 'amira@evnto.com', role: 'Organizer', password: '1234' },
   { id: 2, name: 'Aya Mohamed', email: 'aya@evnto.com', role: 'Guest', password: '1234' },
   { id: 3, name: 'Admin User', email: 'admin@evnto.com', role: 'Admin', password: '1234' },
+  {id: 202, name: 'Omar Hassan', email: 'omar@evnto.com',role: 'Guest', password: '1234'}
 ];
 
 export const mockEvents: AppEvent[] = [
