@@ -91,6 +91,10 @@ section,
   --link-color: #0d6efd;
   --btn-bg: #0d6efd;
   --btn-color: #fff;
+
+  --hover-color: #ffc107;     /* Hover color (yellow) */
+  --border-color: #ddd;       /* Border color */
+}
 } */
 
 /* 🌙 Dark Theme */
@@ -103,6 +107,9 @@ section,
   --link-color: #66b2ff;
   --btn-bg: #333;
   --btn-color: #f8f9fa;
+
+  --hover-color: #ffc107;
+  --border-color: #333;
 }
 body.dark-theme, body.dark-theme * {
   background-color: var(--bg-color) !important;
@@ -122,17 +129,28 @@ body.dark-theme, body.dark-theme * {
 /* .navbar, .sidebar {
   background-color: var(--nav-bg) !important;
   color: var(--text-color) !important;
+
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
 } */
 
 /* Card */
 /* .card {
   background-color: var(--card-bg) !important;
   color: var(--text-color) !important;
+
+  border-color: var(--border-color);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
 } */
 
 /* Links */
 /* a, .nav-link {
   color: var(--link-color) !important;
+
+  transition: color 0.3s ease;
+}
 } */
 
 /* Buttons */
