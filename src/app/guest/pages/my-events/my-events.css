@@ -1,69 +1,64 @@
 .my-events-container {
-  padding: 2rem;
-  background-color: var(--bg-color);
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 15px;
   color: var(--text-color);
-  min-height: 80vh;
-}
-
-.page-title {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 1.8rem;
-  color: var(--text-color);
-}
-
-.no-events {
-  text-align: center;
-  padding: 4rem 1rem;
-  opacity: 0.8;
-}
-
-.no-events .icon {
-  font-size: 3rem;
-  color: var(--hover-color);
-  display: block;
-  margin-bottom: 1rem;
-}
-
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
 }
 
 .event-card {
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease;
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-2px);
 }
 
-.feedback-section {
-  margin-top: 1rem;
+.feedback-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.feedback-section textarea {
+textarea {
   width: 100%;
-  min-height: 80px;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  border-radius: 6px;
+  min-height: 70px;
+  padding: 8px;
+  border-radius: 5px;
   border: 1px solid var(--border-color);
   background-color: var(--bg-color);
   color: var(--text-color);
 }
 
-.feedback-section select {
-  margin-bottom: 0.5rem;
-  padding: 0.3rem;
+input[type='number'] {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-.btn-primary {
-  margin-top: 0.8rem;
-  display: inline-block;
+.empty-msg {
+  text-align: center;
+  color: gray;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.feedback-box button {
+  align-self: flex-start;
+  /* background-color: var(--accent-color);
+  color: white; */
 }

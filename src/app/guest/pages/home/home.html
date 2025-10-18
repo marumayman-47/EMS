@@ -1,1 +1,52 @@
-<p>works...</p>
+<!-- Hero Section -->
+<section class="hero-section">
+    <img src="event-bg.jpg" alt="Events Banner" class="hero-image" />
+  <div class="hero-content">
+    <h1>Discover, Join, and Enjoy Events !</h1>
+    <p>
+      Stay updated with the latest campus events, workshops, and activities.
+      Connect, engage, and make every moment count.
+    </p>
+    <button routerLink="/guest/events" class="btn btn-warning">Explore More</button>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section">
+  <h2>Browse by Category</h2>
+  <div class="categories">
+    <button
+      *ngFor="let category of categories"
+      class="category-btn"
+      [class.active]="selectedCategory === category"
+      (click)="filterByCategory(category)"
+    >
+      {{ category }}
+    </button>
+    <button *ngIf="selectedCategory" class="category-btn reset" (click)="clearFilter()">
+      All
+    </button>
+  </div>
+  <!-- Events Grid -->
+<div class="events-grid">
+  <div class="event-card" *ngFor="let event of filteredEvents">
+    <div class="event-info">
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.description }}</p>
+      <p><strong>Category:</strong> {{ event.category }}</p>
+      <p><strong>Location:</strong> {{ event.location }}</p>
+      <p>
+        <strong>Start:</strong> {{ event.startDate }} <br />
+        <strong>End:</strong> {{ event.endDate }}
+      </p>
+      <p>
+        <span class="badge bg-warning text-dark">{{ event.status }}</span>
+      </p>
+      <button class="btn btn-dark w-100 mt-2" (click)="viewDetails(event.id)">
+            View Details
+      </button>
+    </div>
+  </div>
+</div>
+<button routerLink="/guest/events" class="btn btn-warning">Explore More Events</button>
+</section>
