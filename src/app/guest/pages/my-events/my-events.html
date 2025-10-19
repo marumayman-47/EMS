@@ -1,33 +1,50 @@
 <div class="my-events-container">
-  <h2 class="page-title">My Attended Events</h2>
-
-  <!--  Show message if no attended events -->
-  <div *ngIf="attendedEvents.length === 0; else eventsList" class="no-events">
-    <i class="bi bi-calendar-x icon"></i>
-    <p>You haven’t attended any events yet.</p>
-  </div>
-
-  <!--  Show attended events -->
-  <ng-template #eventsList>
-    <div class="events-grid">
-      <div class="event-card" *ngFor="let event of attendedEvents">
-        <h3>{{ event.name }}</h3>
+  <!-- Invited Events -->
+  <section>
+    <h2>Event Invitations</h2>
+    <div *ngIf="invitedEvents.length; else noInvites">
+      <div class="event-card" *ngFor="let event of invitedEvents">
+        <h4>{{ event.name }}</h4>
         <p>{{ event.description }}</p>
         <p><strong>Location:</strong> {{ event.location }}</p>
         <p><strong>Date:</strong> {{ event.startDate }} → {{ event.endDate }}</p>
-
-        <!-- Feedback form -->
-        <div class="feedback-section">
-          <!-- <label>Rate this event:</label>
-          <select [(ngModel)]="feedbackRating[event.id]">
-            <option [ngValue]="0" disabled>Select rating</option>
-            <option *ngFor="let r of [1, 2, 3, 4, 5]" [ngValue]="r">{{ r }}</option>
-          </select> -->
-
-          <textarea [(ngModel)]="feedbackText[event.id]" placeholder="Write your feedback..."></textarea>
-          <button class="btn btn-warning" (click)="submitFeedback(event.id)">Submit Feedback</button>
+        <div class="buttons">
+          <button class="btn btn-success" (click)="acceptInvitation(event.id)">Accept</button>
+          <button class="btn btn-danger" (click)="declineInvitation(event.id)">Decline</button>
         </div>
       </div>
     </div>
-  </ng-template>
+    <ng-template #noInvites>
+      <p class="empty-msg">No event invitations found.</p>
+    </ng-template>
+  </section>
+
+  <hr />
+
+  <!-- Attended Events -->
+  <section>
+    <h2>My Attended Events</h2>
+    <div *ngIf="attendedEvents.length; else noAttended">
+      <div class="event-card" *ngFor="let event of attendedEvents">
+        <h4>{{ event.name }}</h4>
+        <p>{{ event.description }}</p>
+
+        <div class="feedback-box">
+          <label>Rating:</label>
+          <input type="number" [(ngModel)]="feedbackRating[event.id]" min="1" max="5" />
+          <textarea
+            [(ngModel)]="feedbackText[event.id]"
+            placeholder="Write your feedback here..."
+          ></textarea>
+          <button type="button" class="btn btn-warning" (click)="submitFeedback(event.id)">
+            {{ hasFeedback(event.id) ? 'Update Feedback' : 'Submit Feedback' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noAttended>
+      <p class="empty-msg">You haven't attended any events yet.</p>
+    </ng-template>
+  </section>
 </div>

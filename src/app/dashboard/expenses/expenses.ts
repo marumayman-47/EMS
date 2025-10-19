@@ -41,17 +41,44 @@ export class Expenses implements OnInit , AfterViewInit{
 
   saveToLocal() {
     localStorage.setItem('expenses', JSON.stringify(this.expenses));
+    this.updateEventExpenseLinks();
     this.renderPieChart();
   }
+  
+  // ✅ Update event objects in localStorage to include their expense IDs
+  private updateEventExpenseLinks(): void {
+    const events = JSON.parse(localStorage.getItem('events') || '[]');
 
-  addExpense() {
-    if (!this.newExpense.name.trim() || this.newExpense.amount <= 0 || !this.newExpense.date) {
-      alert('Please fill all required fields and make sure amount > 0');
+    // reset all expense arrays
+    events.forEach((event: any) => {
+      event.expenses = [];
+    });
+
+    // link each expense to its event
+    this.expenses.forEach(exp => {
+      const ev = events.find((e: any) => e.id === exp.eventId);
+      if (ev) {
+        ev.expenses.push(exp.id);
+      }
+    });
+
+    localStorage.setItem('events', JSON.stringify(events));
+  }
+
+  // ✅ Add a new expense
+  addExpense(): void {
+    if (!this.newExpense.name.trim() || this.newExpense.amount <= 0 || !this.newExpense.date || !this.newExpense.eventId) {
+      alert('Please fill all required fields and make sure amount > 0 and Event ID is provided.');
       return;
     }
-    this.newExpense.id = Date.now();
+
+    this.newExpense.id = Date.now(); // unique ID
     this.expenses.push({ ...this.newExpense });
+
+    // Save to localStorage
     this.saveToLocal();
+
+    // ✅ Reset form
     this.newExpense = { id: 0, eventId: 0, name: '', amount: 0, category: 'Venue', date: '', notes: '' };
   }
 
@@ -69,9 +96,11 @@ export class Expenses implements OnInit , AfterViewInit{
     }
   }
   cancelEdit() { this.editExpense = null; }
+
   deleteExpense(id: number) { this.expenses = this.expenses.filter(e => e.id !== id); this.saveToLocal(); }
 
   getTotal(): number { return this.expenses.reduce((sum, e) => sum + e.amount, 0); }
+  
   getCategoryTotal(cat: string) { return this.expenses.filter(e => e.category === cat).reduce((sum, e) => sum + e.amount, 0); }
 
   renderPieChart() {
@@ -89,5 +118,7 @@ export class Expenses implements OnInit , AfterViewInit{
       },
       options: { responsive: true, plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Expenses by Category' } } }
     });
+
   }
+  
 }
