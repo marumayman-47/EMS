@@ -30,8 +30,8 @@
         <p>{{ event.description }}</p>
 
         <div class="feedback-box">
-          <!-- <label>Rating:</label>
-          <input type="number" [(ngModel)]="feedbackRating[event.id]" min="1" max="5" /> -->
+          <label>Rating:</label>
+          <input type="number" [(ngModel)]="feedbackRating[event.id]" min="1" max="5" />
           <textarea
             [(ngModel)]="feedbackText[event.id]"
             placeholder="Write your feedback here..."
