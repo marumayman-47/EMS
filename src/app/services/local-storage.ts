@@ -40,6 +40,10 @@ export class LocalStorageService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
+  setData(key: string, data: any): void {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
   // Generic addItem
   addItem<T extends { id?: number }>(key: string, item: T): void {
     const data = this.getData<T>(key);
