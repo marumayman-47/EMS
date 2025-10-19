@@ -20,8 +20,12 @@ export class Login {
     const user = this.storage.loginUser(this.email, this.password);
     
     if (user) {
-      alert(`Welcome, ${user.name}!`);
-      this.router.navigate((['/dashboard']));
+      if(user.role === 'Admin') {
+        this.router.navigate((['/admin']));
+      }else {
+        // alert(`Welcome, ${user.name}!`);
+        this.router.navigate((['/dashboard']));
+      }
     } else {
       alert('Invalid email or password.');
     }
