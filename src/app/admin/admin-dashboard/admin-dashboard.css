@@ -1,0 +1,65 @@
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f9f9f9;
+  }
+  
+  .sidebar {
+    width: 240px;
+    background: #2d3748;
+    color: white;
+    padding: 20px;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin: 15px 0;
+  }
+  
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .sidebar a:hover {
+    text-decoration: underline;
+  }
+  
+  .sidebar button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #e53e3e;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 40px;
+  }
+  
+  .stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  

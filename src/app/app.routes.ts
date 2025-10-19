@@ -16,6 +16,7 @@ import { Feedbacks } from './dashboard/feedbacks/feedbacks';
 import { Settings } from './dashboard/settings/settings';
 
 import { Reports } from './dashboard/reports/reports';
+import { ADMIN_ROUTES } from './admin/admin.routes';
 
 
 export const routes: Routes = [
@@ -45,6 +46,13 @@ export const routes: Routes = [
     { path: 'events', component: Eventlist },
     { path: 'guest', children: guestRoutes},
     
+    // =================== start admin routes ====================
+    {
+        path: 'admin',
+        children: ADMIN_ROUTES
+      },
+      
+    // =================== end admin routes ====================
     
 
 
