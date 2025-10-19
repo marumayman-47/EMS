@@ -73,9 +73,9 @@
           <td>{{ task.createdAt }}</td>
           <td>{{ task.updatedAt }}</td>
           <td>
-            <button class="btn btn-info btn-sm me-1" (click)="viewTask(task)">View</button>
-            <button class="btn btn-warning btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editTaskModal" (click)="updateTask(task)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteTask(task.id)">Delete</button>
+            <button class="btn btn-info btn-sm me-1" (click)="viewTask(task)"><i class="bi bi-eye"></i></button>
+            <button class="btn btn-warning btn-sm me-1" data-bs-toggle="modal" data-bs-target="#editTaskModal" (click)="updateTask(task)"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-danger btn-sm" (click)="deleteTask(task.id)"><i class="bi bi-trash"></i></button>
           </td>
         </tr>
       </tbody>
