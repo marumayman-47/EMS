@@ -35,7 +35,7 @@ export class Feedbacks implements OnInit{
 
   /** ✅ Load feedback + related data from localStorage */
   loadData(): void {
-    const storedFeedbacks = localStorage.getItem('feedbacks');
+    const storedFeedbacks = localStorage.getItem('feedback');
     const storedEvents = localStorage.getItem('events');
     const storedGuests = localStorage.getItem('guests');
 
