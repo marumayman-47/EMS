@@ -1,0 +1,40 @@
+<div class="events-container">
+    <h2 class="text-center">📅 All Events</h2>
+    <p class="subtitle text-center">All events created by users (read-only view)</p><br>
+  
+    <table *ngIf="events.length > 0; else noEvents">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Event Name</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+          <th>Created By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ event.name }}</td>
+          <td>{{ event.category }}</td>
+          <td>{{ event.location }}</td>
+          <td>{{ event.startDate }}</td>
+          <td>{{ event.endDate }}</td>
+          <td>
+            <span class="status" [ngClass]="event.status?.toLowerCase()">{{ event.status }}</span>
+          </td>
+          <td>{{ getUser(event.createdBy) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noEvents>
+      <div class="no-data">
+        <p>No events found.</p>
+      </div>
+    </ng-template>
+  </div>
+  
