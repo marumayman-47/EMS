@@ -22,8 +22,9 @@ export class Login {
     if (user) {
       if(user.role === 'Admin') {
         this.router.navigate((['/admin']));
+      }else if (user.role === 'Guest') {
+        this.router.navigate((['/guest']));
       }else {
-        // alert(`Welcome, ${user.name}!`);
         this.router.navigate((['/dashboard']));
       }
     } else {

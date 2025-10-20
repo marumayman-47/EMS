@@ -1,33 +1,32 @@
-<div class="admin-container">
-    <aside class="sidebar">
-      <h2>Admin Panel</h2>
-      <ul>
-        <li><a routerLink="/admin/dashboard">Dashboard</a></li>
-        <li><a routerLink="/dashboard">Event Managers</a></li>
-        <li><a routerLink="/admin/guests">Guests</a></li>
-        <li><a routerLink="/admin/settings">Settings</a></li>
-      </ul>
-      <button (click)="logout()">Logout</button>
-    </aside>
+<div class="dashboard-container">
+    <h2 class="text-center">Welcome back, {{ adminName }} 👋</h2>
+    <p class="subtitle text-center">System Overview</p><br>
   
-    <main class="main-content">
-      <h1>Welcome, {{ adminName }}</h1>
-      <p>Here’s an overview of your Event Management System.</p>
-  
-      <div class="stats">
-        <div class="card">
-          <h3>Total Events</h3>
-          <p>{{ getCount('events') }}</p>
-        </div>
-        <div class="card">
-          <h3>Total Guests</h3>
-          <p>{{ getCount('guests') }}</p>
-        </div>
-        <div class="card">
-          <h3>Total Users</h3>
-          <p>{{ getCount('users') }}</p>
-        </div>
+    <div class="cards">
+      <div class="card">
+        <h3>{{ totalUsers }}</h3>
+        <p>Registered Users</p>
       </div>
-    </main>
+  
+      <div class="card">
+        <h3>{{ totalEvents }}</h3>
+        <p>Total Events</p>
+      </div>
+  
+      <div class="card">
+        <h3>{{ totalGuests }}</h3>
+        <p>Total Guests</p>
+      </div>
+  
+      <div class="card">
+        <h3>${{ totalExpenses | number:'1.0-0' }}</h3>
+        <p>Total Expenses</p>
+      </div>
+    </div>
+  
+    <!-- <div class="chart-placeholder">
+      <h4>Reports Coming Soon 📊</h4>
+      <p>This area will show charts for event stats and spending analysis.</p>
+    </div> -->
   </div>
   
