@@ -118,8 +118,13 @@ nextPage(): void {
   }
 
   /** Save Event with Full Validation */
-saveEvent(): void {
+ saveEvent(eventForm: any): void {
   console.log("✅ Save button clicked", this.selectedEvent);
+
+  if (eventForm && eventForm.invalid) {
+    Object.values(eventForm.controls).forEach((control: any) => control.markAsTouched());
+    return;
+  }
 
   if (!this.selectedEvent) return;
 

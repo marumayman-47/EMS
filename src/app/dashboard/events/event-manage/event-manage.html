@@ -147,7 +147,7 @@
 
         <!-- CREATE / UPDATE MODE -->
         <div class="modal-body" *ngIf="selectedEvent">
-          <form>
+          <form #eventForm="ngForm" (ngSubmit)="saveEvent(eventForm)" novalidate>
             <div class="row g-3">
               <div class="col-md-6">
                 <label class="form-label">Name</label>
@@ -156,6 +156,7 @@
                   [(ngModel)]="selectedEvent.name"
                   name="name"
                   [readonly]="dialogMode === 'view'"
+                  required
                 />
               </div>
               <div class="col-md-6">
@@ -165,6 +166,7 @@
                   [(ngModel)]="selectedEvent.category"
                   name="category"
                   [readonly]="dialogMode === 'view'"
+                  required
                 />
               </div>
               <div class="col-12">
@@ -174,6 +176,7 @@
                   [(ngModel)]="selectedEvent.description"
                   name="description"
                   [readonly]="dialogMode === 'view'"
+                  required
                 ></textarea>
               </div>
               <div class="col-md-6">
@@ -183,6 +186,7 @@
                   [(ngModel)]="selectedEvent.location"
                   name="location"
                   [readonly]="dialogMode === 'view'"
+                  required
                 />
               </div>
               <div class="col-md-3">
@@ -193,6 +197,7 @@
                   [(ngModel)]="selectedEvent.startDate"
                   name="startDate"
                   [readonly]="dialogMode === 'view'"
+                  required
                 />
               </div>
               <div class="col-md-3">
@@ -203,6 +208,7 @@
                   [(ngModel)]="selectedEvent.endDate"
                   name="endDate"
                   [readonly]="dialogMode === 'view'"
+                  required
                 />
               </div>
               <div class="col-md-6">
@@ -212,6 +218,7 @@
                   [(ngModel)]="selectedEvent.status"
                   name="status"
                   [disabled]="dialogMode === 'view'"
+                  required
                 >
                   <option>Upcoming</option>
                   <option>InProgress</option>
@@ -220,10 +227,23 @@
                 </select>
               </div>
             </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button
+                  *ngIf="dialogMode !== 'view'"
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="saveEvent(eventForm)"
+                  [disabled]="!selectedEvent.name || !selectedEvent.startDate || !selectedEvent.endDate"
+                >
+                  Save
+                </button>
+            </div>
           </form>
         </div>
 
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button
             *ngIf="dialogMode !== 'view'"
@@ -234,7 +254,7 @@
           >
             Save
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
