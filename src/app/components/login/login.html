@@ -1,13 +1,11 @@
-<!-- <div class="d-flex justify-content-center align-items-center vh-100 bg-light"> -->
-<div class="d-flex justify-content-center align-items-center vh-100" 
-style="background: linear-gradient(135deg, #e0f7fa, #e8f5e9);">
+<div class="login-page">
+  <div class="d-flex justify-content-center align-items-center vh-100 login-bg">
+    <div class="login-card p-4">
+      <h3 class="text-center mb-4 text-light fw-bold">Event Planner Login</h3>
 
-    <div class="card shadow-lg p-4" style="width: 400px;">
-      <h3 class="text-center mb-4 text-primary fw-bold">Event Planner Login</h3>
-  
       <form (ngSubmit)="onLogin()" #loginForm="ngForm">
         <div class="mb-3">
-          <label for="email" class="form-label fw-semibold">Email</label>
+          <label for="email" class="form-label text-white fw-semibold">Email</label>
           <input
             type="email"
             id="email"
@@ -17,9 +15,9 @@ style="background: linear-gradient(135deg, #e0f7fa, #e8f5e9);">
             required
           />
         </div>
-  
+
         <div class="mb-3">
-          <label for="password" class="form-label fw-semibold">Password</label>
+          <label for="password" class="form-label text-white fw-semibold">Password</label>
           <input
             type="password"
             id="password"
@@ -29,21 +27,20 @@ style="background: linear-gradient(135deg, #e0f7fa, #e8f5e9);">
             required
           />
         </div>
-  
+
         <button
           type="submit"
-          class="btn btn-primary w-100"
+          class="btn login-btn w-100 fw-semibold"
           [disabled]="loginForm.invalid"
         >
           Login
         </button>
-  
-        <p class="text-center mt-3 mb-0">
+
+        <p class="text-center mt-3 mb-0 text-white">
           Don’t have an account?
-          <a routerLink="/register" class="text-decoration-none text-primary">Register here</a>
+          <a routerLink="/register" class="text-info fw-semibold text-decoration-none">Register here</a>
         </p>
       </form>
     </div>
   </div>
-  
-
+</div>

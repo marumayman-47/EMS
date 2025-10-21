@@ -53,7 +53,7 @@ export class Home implements OnInit {
     this.stats.totalExpenses = this.expenses.reduce((sum, e) => sum + e.amount, 0);
     this.stats.totalFeedback = this.feedback.length;
 
-    this.upcomingEvents = this.events.filter(e => e.status === 'Upcoming').slice(0, 3);
+    this.upcomingEvents = this.events.filter(e => e.status === 'Upcoming').slice(0, 5);
   }
 
   navigateTo(path: string) {
