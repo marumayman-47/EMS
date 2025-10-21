@@ -24,24 +24,35 @@
   <!-- Attended Events -->
   <section>
     <h2>My Attended Events</h2>
-    <div *ngIf="attendedEvents.length; else noAttended">
-      <div class="event-card" *ngFor="let event of attendedEvents">
-        <h4>{{ event.name }}</h4>
-        <p>{{ event.description }}</p>
+    <div *ngFor="let event of attendedEvents" class="card my-3 p-3 shadow-sm">
+  <h4>{{ event.name }}</h4>
+  <p><strong>Status:</strong> {{ event.status }}</p>
 
-        <div class="feedback-box">
-          <label>Rating:</label>
-          <input type="number" [(ngModel)]="feedbackRating[event.id]" min="1" max="5" />
-          <textarea
-            [(ngModel)]="feedbackText[event.id]"
-            placeholder="Write your feedback here..."
-          ></textarea>
-          <button type="button" class="btn btn-warning" (click)="submitFeedback(event.id)">
-            {{ hasFeedback(event.id) ? 'Update Feedback' : 'Submit Feedback' }}
-          </button>
-        </div>
-      </div>
-    </div>
+  <div *ngIf="event.status === 'Completed'; else notCompleted">
+    <textarea
+      class="form-control my-2"
+      [(ngModel)]="feedbackText[event.id]"
+      placeholder="Leave your feedback"
+    ></textarea>
+
+    <input
+      type="number"
+      class="form-control my-2"
+      [(ngModel)]="feedbackRating[event.id]"
+      min="1"
+      max="5"
+      placeholder="Rating (1–5)"
+    />
+
+    <button class="btn btn-success" (click)="submitFeedback(event.id)">
+      Submit Feedback
+    </button>
+  </div>
+
+  <ng-template #notCompleted>
+    <p class="text-muted fst-italic">Feedback will be available after event completion.</p>
+  </ng-template>
+</div>
 
     <ng-template #noAttended>
       <p class="empty-msg">You haven't attended any events yet.</p>

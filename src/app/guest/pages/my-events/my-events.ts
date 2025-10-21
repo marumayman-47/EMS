@@ -60,6 +60,14 @@ export class MyEvents {
     const comment = this.feedbackText[eventId];
     const rating = this.feedbackRating[eventId];
 
+    const event = this.localStorage.getData<AppEvent>('events').find(e => e.id === eventId);
+
+    // ✅ Restrict feedback submission if event is not completed
+    if (!event || event.status !== 'Completed') {
+      alert('You can only leave feedback after the event is completed.');
+      return;
+    }
+
     if (!comment || !rating) {
       alert('Please provide both a comment and a rating.');
       return;
