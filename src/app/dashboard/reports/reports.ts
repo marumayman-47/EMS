@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+// import { NgChartsModule } from 'ng2-charts';
 import jsPDF from 'jspdf';
-import html2canvasLib from 'html2canvas';
+import html2canvas from 'html2canvas';
+
 
 
 @Component({
@@ -187,7 +189,7 @@ export class Reports implements OnInit, AfterViewInit {
   // 🧾 Export Report as PDF
   exportPDF() {
     const element = this.reportSection.nativeElement;
-    html2canvasLib(element, { scale: 2 }).then(canvas => {
+    html2canvas(element, { scale: 2 }).then(canvas => {
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgData = canvas.toDataURL('image/png');
       const imgProps = pdf.getImageProperties(imgData);
@@ -200,7 +202,4 @@ export class Reports implements OnInit, AfterViewInit {
 
 }
 
-function html2canvas(element: any, arg1: { scale: number; }) {
-  throw new Error('Function not implemented.');
-}
 

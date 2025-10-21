@@ -27,9 +27,9 @@
           />
         </div>
         <div class="col-md-3">
-          <select class="form-select" [(ngModel)]="filterCategory" (change)="applyFilters()">
+          <select class="form-select" [(ngModel)]="filterCategory" (change)="onFiltersChanged()">
             <option value="">All Categories</option>
-            <option *ngFor="let c of uniqueCategories" [value]="c">{{ c }}</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
           </select>
         </div>
         <div class="col-md-3">
@@ -189,6 +189,7 @@
                   >
                     <option value="" disabled>Select category</option>
                     <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                    <option value="__new__">➕ Add new category...</option>
                   </select>
                 </div>
                 <div class="col-12">
