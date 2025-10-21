@@ -21,6 +21,7 @@ interface EventTasks {
 export class Tasks {
   tasks: Task[] = [];
   groupedTasks: EventTasks[] = [];
+  events: any[] = [];
 
   selectedStatus: string = '';
   selectedPriority: string = '';
@@ -36,9 +37,10 @@ export class Tasks {
     this.tasks = storedTasks && storedTasks.length ? storedTasks : mockTasks;
 
     // Ensure events exist in localStorage for linking
-    if (!localStorage.getItem('events')) {
-      localStorage.setItem('events', JSON.stringify([]));
-    }
+    this.events = this.loadFromLocalStorage<any[]>('events') || [];
+    // if (!localStorage.getItem('events')) {
+    //   localStorage.setItem('events', JSON.stringify([]));
+    // }
 
     this.groupTasksByEvent();
   }
@@ -199,5 +201,15 @@ export class Tasks {
   this.viewTaskObj = task;
   this.dialogMode = 'view';
 }
+
+ngOnInit() {
+  this.refreshEvents();
+  window.addEventListener('storage', () => this.refreshEvents());
+}
+
+refreshEvents() {
+  this.events = this.loadFromLocalStorage<any[]>('events') || [];
+}
+
 
 }
