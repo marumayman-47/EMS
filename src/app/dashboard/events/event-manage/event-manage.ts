@@ -23,10 +23,12 @@ export class EventManage implements OnInit {
   filteredEvents: any[] = [];
   uniqueCategories: string[] = [];
 
+  categories: string[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalPages: number = 1;
 
+  newCategory: string = ''; 
   constructor(private storage: LocalStorageService) {}
 
   ngOnInit(): void {
@@ -36,10 +38,24 @@ export class EventManage implements OnInit {
   /** Load Events from LocalStorage */ 
   loadEvents(): void {
    this.events = this.storage.getData<AppEvent>('events');
-   this.uniqueCategories = [...new Set(this.events.map((e: any) => e.category))];
+   this.categories = [...new Set(this.events.map((e: any) => e.category).filter(Boolean))];
    this.applyFilters();
   }
 
+   /** When user selects "Add new category" */
+  onCategoryChange(event: any): void {
+    if (event.target.value === '__new__') {
+      const newCat = prompt('Enter a new category name:');
+      if (newCat && newCat.trim()) {
+        const trimmed = newCat.trim();
+        if (!this.categories.includes(trimmed)) this.categories.push(trimmed);
+        this.selectedEvent!.category = trimmed;
+      } else {
+        this.selectedEvent!.category = ''; // reset if canceled
+      }
+    }
+  }
+  
   applyFilters(): void {
   // filter
   const filtered = this.events.filter((e: any) => {
