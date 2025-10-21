@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Guest } from '../../models/guest';
 import { AppEvent } from '../../models/event';
+import { LocalStorageService } from '../../services/local-storage';
 
 declare const bootstrap: any;
 
@@ -19,22 +20,27 @@ export class Guests implements OnInit {
   filteredGuests: Guest[] = [];
   events: AppEvent[] = [];
   statuses = ['Invited', 'Accepted', 'Declined', 'Pending'];
+  formStatuses = ['Invited', 'Pending'];
+
 
   selectedEvent: string = '';
   selectedStatus: string = '';
   searchTerm: string = '';
 
-  guestForm: Guest = {
+  guestForm: any = {
     id: 0,
     name: '',
     email: '',
     phone: '',
-    status: 'Pending',
-    eventId: 0
+    status: 'Invited',
+    eventId: 0,
+    password: ''
   };
 
   editMode = false;
   currentUser: any = null;
+
+  constructor(private storage: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -44,15 +50,12 @@ export class Guests implements OnInit {
 
   /** Load the currently logged-in user */
   loadCurrentUser(): void {
-    const storedUser = localStorage.getItem('currentUser');
-    this.currentUser = storedUser ? JSON.parse(storedUser) : null;
+    this.currentUser = this.storage.getCurrentUser();
   }
 
   /** Load only this user's events */
   loadEvents(): void {
-    const storedEvents = localStorage.getItem('events');
-    const allEvents = storedEvents ? JSON.parse(storedEvents) as AppEvent[] : [];
-
+    const allEvents = this.storage.getData<AppEvent>('events');
     if (this.currentUser) {
       this.events = allEvents.filter(e => +e.createdBy === +this.currentUser.id);
     } else {
@@ -62,10 +65,8 @@ export class Guests implements OnInit {
 
   /** Load guests for the current user's events */
   loadGuests(): void {
-    const storedGuests = localStorage.getItem('guests');
-    const storedEvents = localStorage.getItem('events');
-    const allGuests: Guest[] = storedGuests ? JSON.parse(storedGuests) : [];
-    const allEvents: AppEvent[] = storedEvents ? JSON.parse(storedEvents) : [];
+    const allGuests = this.storage.getData<Guest>('guests');
+    const allEvents = this.storage.getData<AppEvent>('events');
 
     if (this.currentUser) {
       const userEventIds = allEvents
@@ -78,14 +79,6 @@ export class Guests implements OnInit {
     }
 
     this.filteredGuests = [...this.guests];
-  }
-
-  saveToStorage(): void {
-    // Update only the global guest list, not just filtered ones
-    const allGuests = JSON.parse(localStorage.getItem('guests') || '[]');
-    const updatedGuests = allGuests.filter((g: Guest) => !this.guests.find(ug => ug.id === g.id));
-    const mergedGuests = [...updatedGuests, ...this.guests];
-    localStorage.setItem('guests', JSON.stringify(mergedGuests));
   }
 
   /** Filter guests by event, status, or search */
@@ -109,7 +102,7 @@ export class Guests implements OnInit {
 
   /** Add or update a guest */
   saveGuest(): void {
-    if (!this.guestForm.name || !this.guestForm.email || !this.guestForm.eventId) {
+    if (!this.guestForm.name || !this.guestForm.email || !this.guestForm.phone || !this.guestForm.password || !this.guestForm.eventId) {
       alert('Please fill in all required fields.');
       return;
     }
@@ -118,6 +111,13 @@ export class Guests implements OnInit {
     const validEvent = this.events.find(e => +e.id === +this.guestForm.eventId);
     if (!validEvent) {
       alert('You can only add guests to your own events.');
+      return;
+    }
+
+    const allUsers = this.storage.getData<any>('users');
+    const existingUser = allUsers.find(u => u.email === this.guestForm.email);
+    if (!this.editMode && existingUser) {
+      alert('A user with this email already exists.');
       return;
     }
 
@@ -130,13 +130,35 @@ export class Guests implements OnInit {
     if (this.editMode) {
       const index = this.guests.findIndex(g => g.id === this.guestForm.id);
       if (index > -1) this.guests[index] = { ...this.guestForm };
+      this.storage.updateItem('guests', this.guestForm);
       this.editMode = false;
     } else {
-      this.guestForm.id = Date.now();
-      this.guests.push({ ...this.guestForm });
+      const newId = Date.now();
+      const newGuest: Guest = {
+        id: newId,
+        name: this.guestForm.name,
+        email: this.guestForm.email,
+        phone: this.guestForm.phone,
+        status: this.guestForm.status || 'Invited',
+        eventId: +this.guestForm.eventId
+      };
+
+      // Save guest to guests list
+      this.storage.addItem('guests', newGuest);
+
+      // Save guest also as a user with role 'Guest'
+      const newUser = {
+        id: newId,
+        name: this.guestForm.name,
+        email: this.guestForm.email,
+        password: this.guestForm.password,
+        role: 'Guest'
+      };
+      this.storage.addItem('users', newUser);
+
+      this.guests.push(newGuest);
     }
 
-    this.saveToStorage();
     this.filterGuests();
     this.resetForm();
 
@@ -149,7 +171,7 @@ export class Guests implements OnInit {
   }
 
   editGuest(guest: Guest): void {
-    this.guestForm = { ...guest };
+    this.guestForm = { ...guest, password: '' }; // password not stored in guest, new required only if updated as user
     this.editMode = true;
     const modalEl = document.getElementById('guestModal');
     if (modalEl) {
@@ -161,7 +183,8 @@ export class Guests implements OnInit {
   deleteGuest(id: number): void {
     if (!confirm('Are you sure you want to delete this guest?')) return;
     this.guests = this.guests.filter(g => g.id !== id);
-    this.saveToStorage();
+    this.storage.deleteItem('guests', id);
+    this.storage.deleteItem('users', id);
     this.filterGuests();
   }
 
@@ -171,8 +194,9 @@ export class Guests implements OnInit {
       name: '',
       email: '',
       phone: '',
-      status: 'Pending',
-      eventId: 0
+      status: 'Invited',
+      eventId: 0,
+      password: ''
     };
     this.editMode = false;
   }
