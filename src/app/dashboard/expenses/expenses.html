@@ -57,7 +57,14 @@
       </div>
       <div class="modal-body">
         <form>
-          <div class="mb-2"><label class="form-label">Event ID</label><input type="number" class="form-control" [(ngModel)]="newExpense.eventId" name="eventId"></div>
+          <div class="mb-2"><label class="form-label">Event ID</label>
+            <select class="form-select" [(ngModel)]="newExpense.eventId" name="eventId">
+              <option value="" disabled selected>Select Event</option>
+              <option *ngFor="let e of events" [value]="e.id">
+                {{ e.id }} — {{ e.name || e.title || 'Untitled Event' }}
+              </option>
+            </select>
+          </div>
           <div class="mb-2"><label class="form-label">Name</label><input type="text" class="form-control" [(ngModel)]="newExpense.name" name="name"></div>
           <div class="mb-2"><label class="form-label">Amount</label><input type="number" class="form-control" [(ngModel)]="newExpense.amount" name="amount"></div>
           <div class="mb-2"><label class="form-label">Category</label>
@@ -87,7 +94,14 @@
       </div>
       <div class="modal-body">
         <form *ngIf="editExpense">
-          <div class="mb-2"><label class="form-label">Event ID</label><input type="number" class="form-control" [(ngModel)]="editExpense.eventId" name="editEventId"></div>
+          <div class="mb-2"><label class="form-label">Event ID</label>
+            <select class="form-select" [(ngModel)]="editExpense.eventId" name="editEventId">
+              <option value="" disabled>Select Event</option>
+              <option *ngFor="let e of events" [value]="e.id">
+                {{ e.id }} — {{ e.name || e.title || 'Untitled Event' }}
+              </option>
+            </select>
+          </div>
           <div class="mb-2"><label class="form-label">Name</label><input type="text" class="form-control" [(ngModel)]="editExpense.name" name="editName"></div>
           <div class="mb-2"><label class="form-label">Amount</label><input type="number" class="form-control" [(ngModel)]="editExpense.amount" name="editAmount"></div>
           <div class="mb-2"><label class="form-label">Category</label>

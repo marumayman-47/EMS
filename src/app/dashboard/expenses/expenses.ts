@@ -16,6 +16,7 @@ export class Expenses implements OnInit , AfterViewInit{
   @ViewChild('pieCanvas') pieCanvas!: ElementRef<HTMLCanvasElement>;
 
   expenses: Expense[] = [];
+  events: any[] = [];
   newExpense: Expense = { id: 0, eventId: 0, name: '', amount: 0, category: 'Venue', date: '', notes: '' };
   editExpense: Expense | null = null;
   
@@ -33,6 +34,11 @@ export class Expenses implements OnInit , AfterViewInit{
       ];
       localStorage.setItem('expenses', JSON.stringify(this.expenses));
     }
+    this.refreshEvents();
+    window.addEventListener('storage', () => this.refreshEvents());
+  }
+  refreshEvents() {
+    this.events = JSON.parse(localStorage.getItem('events') || '[]');
   }
 
   ngAfterViewInit(): void {
