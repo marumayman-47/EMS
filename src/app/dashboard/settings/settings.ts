@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +16,11 @@ export class Settings implements OnInit {
   user: any = {};
   isDarkMode = false;
 
-  constructor(private localStorageService: LocalStorageService, private router: Router) {}
+  constructor(
+    private localStorageService: LocalStorageService, 
+    private router: Router, 
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
     const currentUser = this.localStorageService.getCurrentUser();
@@ -23,8 +28,7 @@ export class Settings implements OnInit {
       this.user = { ...currentUser };
     }
 
-    this.isDarkMode = localStorage.getItem('theme') === 'dark';
-    this.applyTheme();
+    this.isDarkMode = document.body.classList.contains('dark-theme');
   }
 
   saveProfile(): void {
@@ -36,14 +40,11 @@ export class Settings implements OnInit {
   }
 
   toggleTheme(): void {
-    const theme = this.isDarkMode ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-    this.applyTheme();
+    this.themeService.toggleTheme(); 
+    this.isDarkMode = document.body.classList.contains('dark-theme');
   }
 
-  applyTheme(): void {
-    document.body.classList.toggle('dark-theme', this.isDarkMode);
-  }
+  
 
   logout(): void {
     this.localStorageService.logoutUser();
