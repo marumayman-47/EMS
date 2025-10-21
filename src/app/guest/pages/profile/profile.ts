@@ -36,10 +36,6 @@ export class Profile implements OnInit {
   }
 
   //update profile
-  // updateProfile():void{
-  //   localStorage.setItem('currentUser', JSON.stringify(this.user));
-  //   alert("Profile updated successfully !");
-  // }
   updateProfile(): void {
   const users = JSON.parse(localStorage.getItem('users') || '[]');
 
