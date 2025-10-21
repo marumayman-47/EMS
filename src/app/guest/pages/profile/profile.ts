@@ -36,10 +36,38 @@ export class Profile implements OnInit {
   }
 
   //update profile
-  updateProfile():void{
-    localStorage.setItem('currentUser', JSON.stringify(this.user));
-    alert("Profile updated successfully !");
+  // updateProfile():void{
+  //   localStorage.setItem('currentUser', JSON.stringify(this.user));
+  //   alert("Profile updated successfully !");
+  // }
+  updateProfile(): void {
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+  // Ensure user has ID
+  if (!this.user.id) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    this.user.id = currentUser.id;
   }
+
+  // Find existing user by ID or email
+  const index = users.findIndex(
+    (u: any) => u.id === this.user.id || u.email === this.user.email
+  );
+
+  if (index !== -1) {
+    users[index] = this.user;
+  } else {
+    // Optional: only if you want to handle missing users
+    users.push(this.user);
+  }
+
+  // Save back to localStorage
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.setItem('currentUser', JSON.stringify(this.user));
+
+  alert('Profile updated successfully!');
+}
+
 
   //save changes
   
