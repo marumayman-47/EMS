@@ -25,7 +25,6 @@ export class LocalStorageService {
       localStorage.setItem(key, JSON.stringify(data));
     }
   }
-  
 // getData<T>() returns an array of type T[].
 //addItem, updateItem, deleteItem only work with objects that have an id (using <T extends { id: number }>).
 //So item is now known, not unknown.
@@ -39,10 +38,6 @@ export class LocalStorageService {
   saveData<T>(key: string, data: T[]): void {
     localStorage.setItem(key, JSON.stringify(data));
   }
-
-  setData(key: string, data: any): void {
-  localStorage.setItem(key, JSON.stringify(data));
-}
 
   // Generic addItem
   addItem<T extends { id?: number }>(key: string, item: T): void {
